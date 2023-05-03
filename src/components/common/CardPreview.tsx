@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import styled from 'styled-components';
 
 import { CARD_COMPANY } from '../../constants/cardCompany';
-import { CardPreviewInfoContext } from '../../contexts/cardInfo';
+import { CardPreviewInfoContext } from '../../contexts/cardPreviewInfo';
 
 export function CardPreview() {
-  const { card_number, username, expired_date, company } = useContext(
+  const { cardNumber, username, expiredDate, company } = useContext(
     CardPreviewInfoContext
   );
 
@@ -19,33 +19,36 @@ export function CardPreview() {
       : 'gray';
 
   return (
-    <CardContainer color={companyColor}>
+    <Container color={companyColor}>
       <_CompanyName>{companyName}</_CompanyName>
       <_Chip />
-      <NumberWrapper>
-        <NumberItem>{card_number.first.value}</NumberItem>
-        <NumberItem>{card_number.second.value}</NumberItem>
-        <NumberItem>{'•'.repeat(card_number.third.value.length)}</NumberItem>
-        <NumberItem>{'•'.repeat(card_number.fourth.value.length)}</NumberItem>
-      </NumberWrapper>
-      <InfoWrapper>
-        <Name>{username.first.value}</Name>
-        <Date>
-          {expired_date.month.value}/{expired_date.year.value}
-        </Date>
-      </InfoWrapper>
-    </CardContainer>
+      <_NumberWrapper>
+        <_NumberItem>{cardNumber.first.value}</_NumberItem>
+        <_NumberItem>{cardNumber.second.value}</_NumberItem>
+        <_NumberItem>{'•'.repeat(cardNumber.third.value.length)}</_NumberItem>
+        <_NumberItem>{'•'.repeat(cardNumber.fourth.value.length)}</_NumberItem>
+      </_NumberWrapper>
+      <_InfoWrapper>
+        <_Name>{username.first.value}</_Name>
+        <_Date>
+          {expiredDate.month.value}/{expiredDate.year.value}
+        </_Date>
+      </_InfoWrapper>
+    </Container>
   );
 }
 
-const CardContainer = styled.section`
+const Container = styled.section`
   display: flex;
   flex-direction: column;
   width: 21.3rem;
   height: 13.3rem;
   margin-bottom: 3.5rem;
-  background-color: ${(props) => props.color || 'gray'};
-  color: ${(props) => (props.color === '#FFE600' ? 'black' : 'white')};
+  background-color: ${(props) => props.color || props.theme.color.grey400};
+  color: ${(props) =>
+    props.color === props.theme.color.yellowKakao
+      ? props.theme.color.black
+      : props.theme.color.white};
   font-size: 1.3rem;
   font-weight: 500;
 
@@ -71,25 +74,25 @@ const _Chip = styled.div`
   width: 4rem;
   height: 2.6rem;
   margin-left: 1.4rem;
-  background-color: #cbba64;
+  background-color: ${(props) => props.theme.color.yellow};
   border-radius: 0.4rem;
 `;
 
-const NumberWrapper = styled.ul`
+const _NumberWrapper = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
   margin: 1.3rem 1rem 0 2rem;
 `;
 
-const NumberItem = styled.li``;
+const _NumberItem = styled.li``;
 
-const InfoWrapper = styled.div`
+const _InfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0.8rem 1.5em;
 `;
 
-const Name = styled.div``;
+const _Name = styled.div``;
 
-const Date = styled.div``;
+const _Date = styled.div``;

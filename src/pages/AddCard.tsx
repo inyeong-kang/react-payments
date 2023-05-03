@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { CardCompanySelectModal, CardRegisterForm } from '../components';
 import { Header, BackButton, CardPreview } from '../components/common';
-import { CardInfoProvider } from '../contexts/cardInfo';
+import { CardPreviewInfoProvider } from '../contexts/cardPreviewInfo';
 
 export function AddCard() {
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -13,12 +13,12 @@ export function AddCard() {
   }
 
   return (
-    <CardInfoProvider>
+    <CardPreviewInfoProvider>
       <_AddCardContainer>
         <Header title='카드 추가' render={BackButton} />
         <_Section>
-          <CardPreview></CardPreview>
-          <CardRegisterForm></CardRegisterForm>
+          <CardPreview />
+          <CardRegisterForm />
           <_CompanySelectButton onClick={handleClickButton}>
             카드사 재선택
           </_CompanySelectButton>
@@ -29,7 +29,7 @@ export function AddCard() {
           onModalClose={setIsModalOpen}
         ></CardCompanySelectModal>
       )}
-    </CardInfoProvider>
+    </CardPreviewInfoProvider>
   );
 }
 

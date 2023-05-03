@@ -1,6 +1,5 @@
-import { createContext } from 'react';
+import { createContext, useState } from 'react';
 
-import { useCompany } from '../hooks/useCompany';
 import { useInput } from '../hooks/useInput';
 import { cardRegisterValidator } from '../validation/cardRegister';
 
@@ -22,13 +21,13 @@ export const passwordInput = {
 };
 
 export const CardPreviewInfoContext = createContext({
-  card_number: {
+  cardNumber: {
     first: { ...defaultInput },
     second: { ...defaultInput },
     third: { ...passwordInput },
     fourth: { ...passwordInput },
   },
-  expired_date: {
+  expiredDate: {
     month: { ...defaultInput },
     year: { ...defaultInput },
   },
@@ -36,13 +35,30 @@ export const CardPreviewInfoContext = createContext({
     first: { ...optionalInput },
   },
   company: {
-    clicked: {} as ReturnType<typeof useCompany>,
+    clicked: {
+      value: '',
+      handleClick: (e: React.MouseEvent<HTMLImageElement>) => {
+        e;
+      },
+    },
   },
 });
 
-export function CardInfoProvider({ children }: { children: React.ReactNode }) {
-  const preivewInfo = {
-    card_number: {
+export function CardPreviewInfoProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [company, setCompany] = useState('');
+
+  function handleClick(e: React.MouseEvent<HTMLImageElement>) {
+    if (e.target instanceof HTMLImageElement) {
+      setCompany(e.target.id);
+    }
+  }
+
+  const previewInfo = {
+    cardNumber: {
       first: {
         ...defaultInput,
         ...useInput(cardRegisterValidator.cardNumber),
@@ -60,7 +76,7 @@ export function CardInfoProvider({ children }: { children: React.ReactNode }) {
         ...useInput(cardRegisterValidator.cardNumber),
       },
     },
-    expired_date: {
+    expiredDate: {
       month: {
         ...defaultInput,
         ...useInput(cardRegisterValidator.month),
@@ -77,12 +93,12 @@ export function CardInfoProvider({ children }: { children: React.ReactNode }) {
       },
     },
     company: {
-      clicked: { ...useCompany() },
+      clicked: { value: company, handleClick: handleClick },
     },
   };
 
   return (
-    <CardPreviewInfoContext.Provider value={preivewInfo}>
+    <CardPreviewInfoContext.Provider value={previewInfo}>
       {children}
     </CardPreviewInfoContext.Provider>
   );

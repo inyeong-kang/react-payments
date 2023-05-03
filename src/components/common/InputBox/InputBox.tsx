@@ -4,37 +4,41 @@ import styled from 'styled-components';
 import { ERROR_MESSAGE } from '../../../constants/errors';
 import { LABEL, MAX_LENGTH, SIZE_STYLE } from '../../../constants/inputInfo';
 import { InputInfo } from '../../../type/input';
+import { camelToSnake } from '../../../utils/cardInfoFormat';
 import { ErrorMessage, Label, Input } from '../../common';
 
 export interface InputBoxProps extends React.HTMLAttributes<HTMLDivElement> {
+  infoType: string;
   inputs: InputInfo[];
 }
 
-export function InputBox({ id, inputs }: InputBoxProps) {
+export function InputBox({ infoType, inputs }: InputBoxProps) {
   return (
     <_InputContainer>
-      <Label htmlFor={`${id}`}>
-        {String(id) in LABEL ? LABEL[`${id}`] : String(id)}
-      </Label>
+      <Label htmlFor={infoType}>{LABEL[camelToSnake(infoType)]}</Label>
       <_InputWithErrorMessage>
         {inputs.map(
           ({ type, value, handleChange, required, isError }, index) => (
-            <>
+            <React.Fragment key={index}>
               <_InputWrapper>
-                <div>{id === 'username' ? `${value.length} / 30` : ''}</div>
+                <_TextCount>
+                  {infoType === 'username' ? `${value.length} / 30` : ''}
+                </_TextCount>
                 <Input
-                  id={`${id}${index}`}
-                  name={id}
+                  isError={isError}
+                  name={infoType}
                   type={type}
                   value={value}
                   onChange={handleChange}
                   required={required}
-                  maxLength={MAX_LENGTH[`${id}`]}
-                  size={SIZE_STYLE[`${id}`]}
+                  maxLength={MAX_LENGTH[camelToSnake(infoType)]}
+                  size={SIZE_STYLE[camelToSnake(infoType)]}
                 />
-                <ErrorMessage>{isError && ERROR_MESSAGE[`${id}`]}</ErrorMessage>
+                <ErrorMessage>
+                  {isError && ERROR_MESSAGE[camelToSnake(infoType)]}
+                </ErrorMessage>
               </_InputWrapper>
-            </>
+            </React.Fragment>
           )
         )}
       </_InputWithErrorMessage>
@@ -45,7 +49,6 @@ export function InputBox({ id, inputs }: InputBoxProps) {
 const _InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 
   margin: 1rem;
 `;
@@ -55,7 +58,7 @@ const _InputWrapper = styled.div`
   flex-direction: column;
   justify-content: space-around;
 
-  gap: 1rem;
+  gap: 0.7rem;
 `;
 
 const _InputWithErrorMessage = styled.div`
@@ -63,4 +66,12 @@ const _InputWithErrorMessage = styled.div`
   justify-content: start;
 
   gap: 0.7rem;
+`;
+
+const _TextCount = styled.div`
+  position: relative;
+  left: 35rem;
+  top: -1.3rem;
+
+  width: 5rem;
 `;

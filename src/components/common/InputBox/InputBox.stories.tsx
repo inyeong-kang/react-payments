@@ -1,10 +1,7 @@
 import React from 'react';
 
 import { InputBox } from './InputBox';
-import { passwordInput } from '../../../contexts/cardInfo';
-import { useInput } from '../../../hooks/useInput';
 import { InputInfo } from '../../../type/input';
-import { cardRegisterValidator } from '../../../validation/cardRegister';
 
 export default {
   component: InputBox,
@@ -69,17 +66,17 @@ const invalidNameInput: InputInfo[] = [
 ];
 
 export const Default: React.FC = () => (
-  <InputBox id={'InputBox 예시'} inputs={defaultInput}></InputBox>
+  <InputBox infoType={'InputBox 예시'} inputs={defaultInput}></InputBox>
 );
 
 export const Invalid: React.FC = () => (
-  <InputBox id={'card_number'} inputs={invalidCardNumberInput}></InputBox>
+  <InputBox infoType={'cardNumber'} inputs={invalidCardNumberInput}></InputBox>
 );
 
 export const ValidCode: React.FC = () => (
-  <InputBox id={'code'} inputs={validCodeInput}></InputBox>
+  <InputBox infoType={'code'} inputs={validCodeInput}></InputBox>
 );
 
 export const InvalidName: React.FC = () => (
-  <InputBox id={'username'} inputs={invalidNameInput}></InputBox>
+  <InputBox infoType={'username'} inputs={invalidNameInput}></InputBox>
 );

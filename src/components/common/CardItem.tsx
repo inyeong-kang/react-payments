@@ -9,7 +9,7 @@ interface CardItemProps {
 }
 
 export function CardItem(props: CardItemProps) {
-  const { card_number, expired_date, username, company } = props.info;
+  const { cardNumber, expiredDate, username, company } = props.info;
   const companyColor = company ? CARD_COMPANY[company].color : 'gray';
   const companyName = company ? CARD_COMPANY[company].name : '';
 
@@ -18,11 +18,11 @@ export function CardItem(props: CardItemProps) {
       <_CompanyName>{companyName}</_CompanyName>
       <_Chip />
       <NumberWrapper>
-        <_NumberItem>{makeCardNumber(card_number)}</_NumberItem>
+        <_NumberItem>{makeCardNumber(cardNumber)}</_NumberItem>
       </NumberWrapper>
       <InfoWrapper>
         <_Name>{username}</_Name>
-        <_Date>{makeCardDate(expired_date)}</_Date>
+        <_Date>{makeCardDate(expiredDate)}</_Date>
       </InfoWrapper>
     </CardContainer>
   );
@@ -33,8 +33,11 @@ const CardContainer = styled.section`
   width: 21.3rem;
   height: 13.3rem;
 
-  background-color: ${(props) => props.color || 'gray'};
-  color: ${(props) => (props.color === '#FFE600' ? 'black' : 'white')};
+  background-color: ${(props) => props.color || props.theme.color.grey400};
+  color: ${(props) =>
+    props.color === props.theme.color.yellowKakao
+      ? props.theme.color.black
+      : props.theme.color.white};
   font-size: 1.3rem;
   font-weight: 500;
 
@@ -59,7 +62,7 @@ const _Chip = styled.div`
   width: 4rem;
   height: 2.6rem;
   margin-left: 1.4rem;
-  background-color: #cbba64;
+  background-color: ${(props) => props.theme.color.yellow};
   border-radius: 0.4rem;
 `;
 
