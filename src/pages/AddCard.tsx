@@ -1,7 +1,8 @@
+import { JeroModal } from 'jero-payments-modal';
 import { useState, useContext } from 'react';
 import styled from 'styled-components';
 
-import { CardCompanySelectModal, CardRegisterForm } from '../components';
+import { CardCompanyList, CardRegisterForm } from '../components';
 import { Header, BackButton, CardItem } from '../components/common';
 import { CardPreviewInfoContext } from '../contexts/cardPreviewInfoContext';
 
@@ -38,9 +39,9 @@ export function AddCard() {
         </_Section>
       </_AddCardContainer>
       {isModalOpen && (
-        <CardCompanySelectModal
-          onModalClose={setIsModalOpen}
-        ></CardCompanySelectModal>
+        <JeroModal onModalClose={setIsModalOpen}>
+          <CardCompanyList />
+        </JeroModal>
       )}
     </>
   );
@@ -61,11 +62,14 @@ const _Section = styled.section`
 
 const _CompanySelectButton = styled.button`
   position: fixed;
-  bottom: 0;
-  width: 50%;
+  bottom: 2rem;
+  left: 2rem;
+  width: 30%;
   padding: 0.8rem;
   border-radius: 1rem 1rem 0 0;
 
   color: black;
   background-color: #a1d5f2;
+  opacity: 0.5;
+  font-weight: bold;
 `;

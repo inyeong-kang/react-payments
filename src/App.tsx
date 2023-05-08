@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { PATH } from './constants/path';
 import CardPreviewInfoProvider from './contexts/cardPreviewInfoProvider';
-import { AddCard, CardList, AddCardName } from './pages';
+import { AddCard, AddCardName, CardList } from './pages';
 import { GlobalStyle } from './styles/global-style';
 import Theme from './styles/theme';
 

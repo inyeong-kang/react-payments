@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-import { CARD_COMPANY } from '../../constants/cardCompany';
+import { CARD_COMPANY } from '../../../constants/cardCompany';
 
-interface CardItemProps {
+export interface CardItemProps {
   cardNumberFirst: string;
   cardNumberSecond: string;
   cardNumberThird: string;
